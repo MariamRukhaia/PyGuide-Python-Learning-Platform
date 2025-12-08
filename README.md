@@ -1,4 +1,4 @@
-# PyGuide — Senior Design Project
+# PyGuide - Senior Design Project
 
 PyGuide is an interactive Python-learning web application designed to help students develop programming skills through structured lessons, code exercises, scoring, badges, and avatar progression. The system provides a friendly interface for beginners while also giving instructors an easy way to monitor user progress through a MySQL database. This project uses a Flask backend, a MySQL database hosted locally through XAMPP, and a clean web interface for interacting with lessons, profiles, and user data.
 
