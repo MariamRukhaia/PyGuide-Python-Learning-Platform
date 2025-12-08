@@ -47,11 +47,10 @@ This will open phpMyAdmin, which allows you to manage MySQL databases visually.
 Inside phpMyAdmin, create a new database named:
 
 
+**pyguide**
 
-pyguide
 
-
-Next, import the provided SQL file included in this repository (usually named `pyguide.sql`). This file automatically creates the necessary tables — such as **User** and **Lesson** — and inserts a main test account used for demonstration and grading.
+Next, import the provided SQL file included in this repository (named `pyguide.sql`). This file automatically creates the necessary tables — such as **User** and **Lesson** — and inserts a main test account used for demonstration and grading.
 
 **Admin account included:**
 - **Username:** Mari  
@@ -63,42 +62,30 @@ This account has full progress unlocked and can be used to showcase all features
 
 ## **Downloading the Project Files**
 
-You can download the PyGuide project in two ways:
 
-### **Option A — Download as ZIP**
+### **Download as ZIP**
 1. Go to the GitHub repository page.  
 2. Click the green **"Code"** button.  
 3. Select **"Download ZIP"**.  
 4. Extract the ZIP file to your computer.
 
-### **Option B — Clone with Git**
-If Git is installed, run:
-git clone https://github.com/MariamRukhaia/PyGuide---Senior-Design-Project.git
-
 
 Open the folder in VS Code or any preferred development editor.
 
-Installing Python Dependencies
+**Installing Python Dependencies**
 
-Inside the project folder, open your terminal and install required Python packages:
+Install required Python packages:
 
-pip install -r requirements.txt
-
-
-If the requirements file is not present, the main packages needed are:
-
-pip install flask sqlalchemy pymysql bcrypt
+`pip install flask sqlalchemy pymysql bcrypt`
 
 
-These handle the web server, the database connection, and password hashing.
-
-Running the Application
+**Running the Application**
 
 The entire system is controlled by the backend Python file.
 
 Inside the project directory, run:
 
-python pyguide_backend.py
+`python pyguide_backend.py`
 
 
 If everything is set up correctly, the terminal will display something like:
@@ -113,7 +100,7 @@ http://127.0.0.1:5000/
 
 This will launch the PyGuide interface, allowing you to register new users, log in, complete lessons, change avatars, and view achievements and scoring.
 
-How to Use the Application
+**How to Use the Application**
 
 Once the site is open, you may log in using the admin account (Mari / 123) or create a new user through the registration page. New accounts start at level one with beginner avatars and gradually unlock new avatars and badges as they progress through lessons. The profile page shows a user’s score, title, badges earned, and current avatar. The lesson system stores progress in the MySQL database, allowing users to pick up where they left off.
 
