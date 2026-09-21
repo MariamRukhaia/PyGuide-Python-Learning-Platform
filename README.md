@@ -1,107 +1,157 @@
-# PyGuide - Senior Design Project
+# PyGuide — Gamified Python Learning Platform
 
-PyGuide is an interactive Python-learning web application designed to help students develop programming skills through structured lessons, code exercises, scoring, badges, and avatar progression. The system provides a friendly interface for beginners while also giving instructors an easy way to monitor user progress through a MySQL database. This project uses a Flask backend, a MySQL database hosted locally through XAMPP, and a clean web interface for interacting with lessons, profiles, and user data.
+PyGuide is an interactive web application designed to make learning Python more engaging through **structured lessons, hands-on coding exercises, automatic grading, progress tracking, and gamification**.
 
-To make the project easy to run on any machine, the database is provided as an SQL file. When instructors or reviewers import this file into phpMyAdmin using XAMPP, the system automatically creates the necessary tables and inserts a sample admin account. Once the database is imported, running the backend Python file will start the entire application on a local server.
+The platform combines a guided Python curriculum with game-inspired features such as **points, levels, badges, avatars, and leaderboards**, encouraging learners to practice concepts and progress through increasingly advanced material.
 
----
+## 🎯 Motivation
 
-## **Downloading Required Software**
+Many beginner programming platforms introduce concepts without giving learners enough opportunities to apply them. PyGuide was designed around a different approach: combine short, structured lessons with immediate practice, feedback, and visible progression.
 
-Before running the PyGuide application, the following tools must be installed:
+The platform breaks Python learning into achievable milestones and rewards users as they advance through the curriculum.
 
-### **1. XAMPP (for MySQL + phpMyAdmin)**
-XAMPP provides the MySQL database and the phpMyAdmin interface used by this project.  
-Download it here:  
-🔗 https://www.apachefriends.org/index.html
+## ✨ Features
 
-Choose the version for **macOS**, **Windows**, or **Linux**, depending on your system.
+- **Structured Python Curriculum** — Lessons progress from beginner to more advanced Python concepts.
+- **Interactive Coding Exercises** — Users write Python directly within the application.
+- **Automatic Grading** — Submitted solutions are evaluated automatically and users receive immediate feedback.
+- **Progressive Lesson Unlocking** — New material becomes available as users complete prerequisite lessons.
+- **Progress Tracking** — Completed lessons, scores, and recent activity are stored for each user.
+- **Gamification System** — Users earn points, badges, titles, and unlockable avatars.
+- **Leaderboard** — Users can compare their progress and scores with other learners.
+- **User Profiles** — Profiles display progress, achievements, scores, titles, and selected avatars.
+- **Account System** — User accounts and passwords are stored using bcrypt password hashing.
 
-### **2. Python**
-Ensure Python 3.10 or newer is installed on your computer.  
-Download it here:  
-🔗 https://www.python.org/downloads/
+## 🏗️ System Architecture
 
-### **3. Git (optional, for cloning the repository)**
-If you want to download the project directly through Git:  
-🔗 https://git-scm.com/downloads
+PyGuide follows a three-layer architecture:
 
-Otherwise, you can download the project as a ZIP file from GitHub.
+**Frontend**
+- HTML/CSS templates
+- Interactive lesson and question pages
+- In-app Python code editor
+- Gamified profile and progress interfaces
 
----
+**Application Layer**
+- Flask web server
+- Authentication and session management
+- Lesson progression logic
+- Code execution and automatic grading
+- Scoring, badges, titles, avatars, and leaderboard logic
 
-## **Setting Up the Database (XAMPP + phpMyAdmin)**
+**Database Layer**
+- MySQL/MariaDB
+- User accounts and authentication data
+- Lesson metadata
+- Scores and completed lessons
+- User progression and avatar selections
 
-After installing XAMPP, open the application and start the following services:
+## 🧠 How It Works
 
-- **MySQL Database**  
-- **Apache Web Server**
+Users create an account and are placed into an appropriate starting level. Lessons introduce Python concepts through structured material followed by questions and coding exercises.
 
-Once the servers are running, open your web browser and go to:
+When a learner submits code, PyGuide evaluates the solution against predefined tests and provides immediate feedback. Successfully completing lessons updates the user's progress in the database, awards points, and unlocks additional content.
 
-http://localhost/phpmyadmin
+As users progress, they can earn new badges and titles, unlock avatars, and appear on the leaderboard.
 
+## 🛠️ Tech Stack
 
-This will open phpMyAdmin, which allows you to manage MySQL databases visually.
+`Python` `Flask` `SQLAlchemy` `MySQL` `MariaDB` `HTML` `CSS` `bcrypt`
 
-Inside phpMyAdmin, create a new database named:
+## 📂 Project Structure
 
+```text
+PyGuide/
+├── static/                 # CSS and avatar assets
+├── templates/              # HTML templates and lesson pages
+├── pyguide_backend.py      # Flask backend and application logic
+├── questions_data.py       # Lesson questions and grading tests
+├── pyguide.sql             # Database schema and demo data
+├── requirements.txt        # Python dependencies
+└── .gitignore
+```
 
-**pyguide**
+## 🚀 Running PyGuide Locally
 
+### 1. Clone the repository
 
-Next, import the provided SQL file included in this repository (named `pyguide.sql`). This file automatically creates the necessary tables — such as **User** and **Lesson** — and inserts a main test account used for demonstration and grading.
+```bash
+git clone <repository-url>
+cd PyGuide-Python-Learning-Platform/PyGuide
+```
 
-**Admin account included:**
-- **Username:** Mari  
-- **Password:** 123  
+### 2. Install dependencies
 
-This account has full progress unlocked and can be used to showcase all features.
+```bash
+pip install -r requirements.txt
+```
 
----
+### 3. Set up the database
 
-## **Downloading the Project Files**
+Install and start **MySQL/MariaDB**. XAMPP can also be used for a simple local MySQL and phpMyAdmin setup.
 
+Create a database named:
 
-### **Download as ZIP**
-1. Go to the GitHub repository page.  
-2. Click the green **"Code"** button.  
-3. Select **"Download ZIP"**.  
-4. Extract the ZIP file to your computer.
+```text
+pyguide
+```
 
+Then import:
 
-Open the folder in VS Code or any preferred development editor.
+```text
+pyguide.sql
+```
 
-**Installing Python Dependencies**
+The SQL file creates the required database structure and includes demo users at different stages of the curriculum for testing the application's progression and gamification features.
 
-Install required Python packages:
+### 4. Run the application
 
-`pip install flask sqlalchemy pymysql bcrypt`
+```bash
+python pyguide_backend.py
+```
 
+Then open:
 
-**Running the Application**
-
-The entire system is controlled by the backend Python file.
-
-Inside the project directory, run:
-
-`python pyguide_backend.py`
-
-
-If everything is set up correctly, the terminal will display something like:
-
- * Running on http://127.0.0.1:5000/
-
-
-Copy this address into your web browser:
-
+```text
 http://127.0.0.1:5000/
+```
+
+## 🔐 Security
+
+PyGuide uses **bcrypt password hashing** and parameterized SQL queries for account and database operations.
+
+The interactive code runner executes submitted Python in a restricted environment intended for **local educational use**. It is not designed as a production-grade sandbox for executing untrusted code on a public server.
+
+## 🎮 Learning & Gamification
+
+PyGuide uses progression and rewards to encourage continued learning. Users can earn:
+
+- Points for completing lessons
+- Achievement badges
+- Score-based titles
+- Unlockable avatars
+- Positions on the leaderboard
+
+Lesson progression is stored in the database so users can return to the application and continue where they left off.
+
+## 🔮 Future Improvements
+
+Future development could include:
+
+- Additional Python levels and advanced topics
+- More detailed autograder feedback
+- AI-assisted learning and personalized hints
+- Collaborative learning features
+- Expanded testing and production deployment
+- Stronger sandboxing for remote code execution
 
 
-This will launch the PyGuide interface, allowing you to register new users, log in, complete lessons, change avatars, and view achievements and scoring.
+## 👥 Project Team
 
-**How to Use the Application**
+PyGuide was developed as a Senior Capstone project at **NYU Tandon School of Engineering** for **CS-UY 4523**.
 
-Once the site is open, you may log in using the admin account (Mari / 123) or create a new user through the registration page. New accounts start at level one with beginner avatars and gradually unlock new avatars and badges as they progress through lessons. The profile page shows a user’s score, title, badges earned, and current avatar. The lesson system stores progress in the MySQL database, allowing users to pick up where they left off.
-
-The instructor can verify user data at any time through phpMyAdmin by opening the User and Lesson tables.
+**Team Members**
+- Mariam Rukhaia
+- Neel Dahake
+- Oleg Vengrovych
+- Elsa Mitchell
