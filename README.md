@@ -4,6 +4,26 @@ PyGuide is an interactive web application designed to make learning Python more 
 
 The platform combines a guided Python curriculum with game-inspired features such as **points, levels, badges, avatars, and leaderboards**, encouraging learners to practice concepts and progress through increasingly advanced material.
 
+---
+
+<h2 align="center">🎥 PyGuide Demo</h2>
+
+<p align="center">
+  <strong>See the full platform in action — lessons, coding exercises, automatic grading, progression, and gamification.</strong>
+</p>
+
+<h3 align="center">
+  <a href="https://drive.google.com/file/d/1bBKN4Bvb-pEo7gH51uuLvGZJkbQuS1OX/view">
+    ▶️ WATCH THE DEMO
+  </a>
+</h3>
+
+<p align="center">
+  <em>3-minute application walkthrough</em>
+</p>
+
+---
+
 ## 🎯 Motivation
 
 Many beginner programming platforms introduce concepts without giving learners enough opportunities to apply them. PyGuide was designed around a different approach: combine short, structured lessons with immediate practice, feedback, and visible progression.
