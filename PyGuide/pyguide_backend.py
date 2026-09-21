@@ -1,30 +1,33 @@
+import os
+import io
+import sys
+import bcrypt
+
 from flask import Flask, request, render_template, redirect, url_for, flash, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, text
-from datetime import datetime 
-import bcrypt
+from datetime import datetime
 from questions_data import questions
-import io, sys
 
 
 app = Flask(__name__)
-app.secret_key = "123"  
 
-# Setting up database
-db_cred = {
-    'user': 'root',
-    'pass': '',
-    'host': 'localhost',
-    'name': 'pyguide' 
-}
+# Application configuration
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-secret-key")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://\
-{db_cred['user']}:{db_cred['pass']}@{db_cred['host']}/\
-{db_cred['name']}"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Database configuration
+db_user = os.environ.get("DB_USER", "root")
+db_password = os.environ.get("DB_PASSWORD", "")
+db_host = os.environ.get("DB_HOST", "localhost")
+db_name = os.environ.get("DB_NAME", "pyguide")
+
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    f"mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}"
+)
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
-engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
 connection = engine.connect()
 
 
@@ -34,41 +37,41 @@ def welcome():
     return render_template('welcome.html')
 
 # Login Page
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
     username = request.form['username']
     password = request.form['password']
 
-    # Get user from the database
-    with db.engine.connect().execution_options(autocommit=True) as connection: # To get updated data from database
+    with db.engine.connect() as connection:
         query = text("SELECT * FROM User WHERE username = :username")
-        result = connection.execute(query, {'username': username}).fetchone()
+        result = connection.execute(
+            query,
+            {'username': username}
+        ).fetchone()
 
     if not result:
         flash('Invalid username or password', 'error')
         return redirect(url_for('welcome'))
 
     hashed_password = result[4]
-    # Password checking
+
     try:
-        if result[4] == password: 
-            flash(f'Welcome back, {username}!', 'success')
-            session['user_id'] = result[0]
-            session['username'] = result[1]
-        
-            return redirect(url_for('display_lessons'))
-        elif bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8')):
-            flash(f'Welcome back, {username}!', 'success')
-            session['user_id'] = result[0]
-            session['username'] = result[1]
-       
-            return redirect(url_for('display_lessons'))
-        else:
-            flash('Invalid username or password', 'error')
-            return redirect(url_for('welcome'))
-    except:
+        password_valid = bcrypt.checkpw(
+            password.encode('utf-8'),
+            hashed_password.encode('utf-8')
+        )
+    except (ValueError, TypeError):
+        password_valid = False
+
+    if not password_valid:
         flash('Invalid username or password', 'error')
         return redirect(url_for('welcome'))
+
+    session['user_id'] = result[0]
+    session['username'] = result[1]
+
+    flash(f'Welcome back, {username}!', 'success')
+    return redirect(url_for('display_lessons'))
 
 
 # Register Page
@@ -782,4 +785,4 @@ def compute_badges(score: int, completed_lessons: list, level1_total: int) -> li
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
