@@ -148,7 +148,7 @@ Future development could include:
 
 ## 👥 Project Team
 
-PyGuide was developed as a Senior Capstone project at **NYU Tandon School of Engineering** for **CS-UY 4523**.
+PyGuide was developed as a Senior Capstone project at **NYU Tandon School of Engineering**.
 
 **Team Members**
 - Mariam Rukhaia
